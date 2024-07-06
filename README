@@ -1,0 +1,71 @@
+# Custom Shell with Alias and Script Execution
+Authored by Amit Tzruya
+207836404
+
+## Description
+This is a custom shell program implemented in C that supports the following features:
+
+- Command execution with alias support.
+- Source script execution.
+- Handling of command execution statistics and alias management.
+- Error handling for invalid commands and script execution errors.
+- Redirection of standard error output to a file using `2>`.
+- Execution of commands in the background using `&`.
+- Job control for tracking and managing background jobs.
+- Logical AND (`&&`) and logical OR (`||`) operators for conditional command execution.
+
+## Features
+- **Command Execution**: Executes commands entered by the user.
+- **Alias Management**: Supports adding (`alias`) and removing (`unalias`) aliases.
+- **Script Execution**: Executes scripts specified by the `source` command.
+- **Statistics**: Displays the number of successful commands, active aliases, and script lines executed.
+- **Redirection**: Supports redirection of standard error output to a file using `2>`.
+- **Background Execution**: Supports running commands in the background using `&`.
+- **Job Control**: Allows tracking and management of background jobs.
+- **Logical Operators**: Supports logical AND (`&&`) and logical OR (`||`) for conditional command execution.
+
+## Database for Aliases
+The shell utilizes a linked list-based dictionary as a database to manage aliases. Each alias is stored as a key-value pair, where the key is the alias name and the value is the corresponding command. The dictionary supports operations to add, remove, and search for aliases, ensuring efficient management and retrieval of aliases during command execution. This allows users to create shortcuts for frequently used commands, enhancing productivity and simplifying command input.
+
+## Database for Jobs
+The shell maintains a database for managing background jobs. Each job is assigned a unique job ID and is stored in a data structure that allows the shell to track the status of each job. The jobs database supports operations to add, list, and automatically remove jobs upon completion. This feature allows users to run multiple commands concurrently and manage them effectively.
+
+## Usage
+### Compile and Run
+1. Ensure you have `gcc` installed on your system.
+2. Open a terminal and navigate to the directory containing the source files.
+3. Run the following commands:
+    ```
+    chmod +x run_me.sh
+    ./run_me.sh
+    ```
+### Commands
+- **General Command Execution**: Type any valid shell command to execute it.
+- **Alias Management**:
+  - Add alias: `alias <shortcut> = '<command>'`
+  - List all aliases: `alias`
+  - Remove alias: `unalias <shortcut>`
+- **Script Execution**: `source <script_filename>`
+- **Redirection**: Redirect standard error to a file using `command 2> <file>`
+  - Example: `ls non_existing_file 2> error.log` will redirect the error output of `ls` to `error.log`.
+- **Background Execution**: Run a command in the background using `command &`
+  - Example: `sleep 10 &` will run the `sleep` command in the background, allowing the shell to accept new commands immediately.
+- **Job Control**:
+  - List jobs: `jobs` - Displays all background jobs with their job IDs.
+  - Remove job: The shell automatically manages job removal on completion.
+- **Logical Operators**:
+  - `&&`: Execute the second command only if the first command succeeds.
+    - Example: `mkdir new_folder && cd new_folder` will create a new directory and change to it only if the directory creation succeeds.
+  - `||`: Execute the second command only if the first command fails.
+    - Example: `cd non_existing_folder || echo "Failed to change directory"` will attempt to change the directory, and if it fails, it will print the message.
+
+- **Exit**: `exit_shell`
+
+## Error Handling
+- Invalid commands or scripts with errors will output `ERR`.
+- Commands containing quotes will increase the apostrophe counter and may cause errors.
+
+## Notes
+- The shell maintains a count of successful commands, active aliases, and executed script lines.
+- Aliases are case-sensitive and must be managed carefully to avoid conflicts.
+
